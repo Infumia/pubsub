@@ -1,7 +1,10 @@
 [versions]
+kotlinserialization = "1.7.0"
 
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "2.9.3" }
 redis = { module = "io.lettuce:lettuce-core", version = "6.3.2.RELEASE" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinserialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinserialization" }
 
 [plugins]
