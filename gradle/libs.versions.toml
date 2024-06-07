@@ -1,0 +1,7 @@
+[versions]
+
+[libraries]
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "2.9.3" }
+redis = { module = "io.lettuce:lettuce-core", version = "6.3.2.RELEASE" }
+
+[plugins]
