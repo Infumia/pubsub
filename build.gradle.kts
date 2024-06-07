@@ -2,6 +2,8 @@ plugins {
   java
   `java-library`
   `maven-publish`
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.kotlin.serialization)
 }
 
 repositories {
@@ -11,6 +13,9 @@ repositories {
 dependencies {
   compileOnly(libs.caffeine)
   compileOnly(libs.redis)
+  compileOnly(libs.kotlin.reflect)
+  compileOnly(libs.kotlinx.serialization.core)
+  compileOnly(libs.kotlinx.serialization.protobuf)
 }
 
 java {
