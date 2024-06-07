@@ -10,7 +10,6 @@ import tr.com.infumia.pubsub.codec.CodecProvider
 
 @OptIn(ExperimentalSerializationApi::class)
 class ProtobufCodecProvider : CodecProvider {
-
     override fun <T : Any> provide(type: Class<T>): Codec<T> =
         ProtobufCodec(ProtoBuf.serializersModule.serializer(type.kotlin.createType()) as KSerializer<T>)
 }
