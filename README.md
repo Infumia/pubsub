@@ -12,6 +12,6 @@ dependencies {
 }
 ```
 ```java
-  void pubsub() {
+void pubsub() {
 }
 ```
