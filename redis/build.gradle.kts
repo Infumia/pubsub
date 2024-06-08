@@ -1,6 +1,6 @@
 dependencies {
-    compileOnly(project(":common"))
     compileOnly(project(":util"))
+    compileOnly(project(":common"))
 
     compileOnly(libs.redis)
 }
