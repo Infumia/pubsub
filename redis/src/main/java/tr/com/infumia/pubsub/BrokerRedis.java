@@ -36,8 +36,8 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
     /**
      * Ctor.
      *
-     * @param codecProvider   the CodecProvider used for encoding and decoding messages.
-     * @param clientProvider  the RedisClientProvider used for obtaining Redis client connections.
+     * @param codecProvider   the CodecProvider used for encoding and decoding messages. Cannot be null.
+     * @param clientProvider  the RedisClientProvider used for obtaining Redis client connections. Cannot be null.
      */
     public BrokerRedis(final CodecProvider codecProvider, final RedisClientProvider clientProvider) {
         super(codecProvider);

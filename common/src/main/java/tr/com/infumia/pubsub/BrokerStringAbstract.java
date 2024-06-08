@@ -25,7 +25,7 @@ public abstract class BrokerStringAbstract implements Broker {
     /**
      * Ctor.
      *
-     * @param codecProvider the CodecProvider used for encoding and decoding messages.
+     * @param codecProvider the CodecProvider used for encoding and decoding messages. Cannot be {@code null}.
      */
     protected BrokerStringAbstract(final CodecProvider codecProvider) {
         this.codecProvider = codecProvider;
@@ -71,8 +71,8 @@ public abstract class BrokerStringAbstract implements Broker {
     /**
      * Calls registered handlers based on the provided channel and encoded data.
      *
-     * @param channel     the channel from which the message was received.
-     * @param encodedData the encoded data representing the message.
+     * @param channel     the channel from which the message was received. Cannot be {@code null}.
+     * @param encodedData the encoded data representing the message. Cannot be {@code null}.
      */
     protected final void callHandlers(final String channel, final String encodedData) {
         final Envelope envelope = this.codecProvider.provide(Envelope.class).decode(Hex.decode(encodedData));
@@ -104,25 +104,25 @@ public abstract class BrokerStringAbstract implements Broker {
     /**
      * Determines the channels to which a message should be sent based on the message type ID and target collection.
      *
-     * @param messageTypeId the ID of the message type.
-     * @param targets       the collection of targets to which the message should be sent.
-     * @return a collection of channel names.
+     * @param messageTypeId the ID of the message type. Cannot be {@code null}.
+     * @param targets       the collection of targets to which the message should be sent. Cannot be {@code null}.
+     * @return a collection of channel names. Cannot be {@code null}.
      */
     protected abstract Collection<String> channelsFor(String messageTypeId, Collection<Target> targets);
 
     /**
      * Retrieves the message type ID for the specified channel.
      *
-     * @param channel the name of the channel.
-     * @return the message type ID associated with the channel.
+     * @param channel the name of the channel. Cannot be {@code null}.
+     * @return the message type ID associated with the channel. Cannot be {@code null}.
      */
     protected abstract String messageTypeIdForChannel(String channel);
 
     /**
      * Sends serialized data to the specified channels.
      *
-     * @param channels      the collection of channels to which the data should be sent.
-     * @param serializedData the serialized data to send.
+     * @param channels      the collection of channels to which the data should be sent. Cannot be {@code null}.
+     * @param serializedData the serialized data to send. Cannot be {@code null}.
      */
     protected abstract void sendData(Collection<String> channels, String serializedData);
 
