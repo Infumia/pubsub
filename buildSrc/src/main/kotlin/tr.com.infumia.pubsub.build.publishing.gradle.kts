@@ -27,4 +27,7 @@ indra {
             }
         }
     }
+    if (project.hasProperty("sign-required")) {
+        signWithKeyFromPrefixedProperties("infumia")
+    }
 }
