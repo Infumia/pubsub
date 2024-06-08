@@ -1,18 +1,29 @@
 plugins {
-  java
-  alias(libs.plugins.indra.publishing.sonatype)
+    java
+    alias(libs.plugins.indra.publishing.sonatype)
 }
 
 repositories.mavenCentral()
 
 subprojects {
-  apply<JavaPlugin>()
+    apply<JavaPlugin>()
 
-  repositories.mavenCentral()
+    repositories.mavenCentral()
 
-  java {
-    toolchain {
-      languageVersion.set(JavaLanguageVersion.of(8))
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(8)
+        }
     }
-  }
+
+    tasks {
+        compileJava {
+            options.compilerArgs.add("-Xlint:-processing")
+            options.compilerArgs.add("-Xlint:-options")
+        }
+    }
+}
+
+indraSonatype {
+    useAlternateSonatypeOSSHost("s01")
 }

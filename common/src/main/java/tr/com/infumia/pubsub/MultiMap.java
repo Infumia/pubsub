@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.function.Supplier;
 
 final class MultiMap<K, V> {
     private final Map<K, Collection<V>> map = new HashMap<>();

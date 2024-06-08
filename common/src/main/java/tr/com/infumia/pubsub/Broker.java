@@ -154,4 +154,7 @@ public interface Broker extends AutoCloseable {
             }
         });
     }
+
+    @Override
+    void close();
 }

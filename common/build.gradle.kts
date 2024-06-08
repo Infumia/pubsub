@@ -1,5 +1,7 @@
-dependencies {
-    implementation(project(":util"))
+plugins {
+    id("tr.com.infumia.pubsub.build.publishing")
+}
 
-    implementation(libs.caffeine)
+dependencies {
+    compileOnly(libs.caffeine)
 }

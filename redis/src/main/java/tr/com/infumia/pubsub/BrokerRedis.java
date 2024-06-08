@@ -14,20 +14,7 @@ import java.util.stream.Collectors;
  * Abstract class for a Redis-based message broker.
  */
 public abstract class BrokerRedis extends BrokerStringAbstract {
-    private final Lazy<Collection<String>> channelPrefixes = Lazy.of(() -> {
-        final ArrayList<String> channels = new ArrayList<>();
-        channels.addAll(Internal.channelPrefixFor(Collections.emptySet()));
-        channels.addAll(Internal.channelPrefixFor(Collections.singleton(this.responderTarget)));
-        final TargetProvider targetProvider = this.targetProvider();
-        if (targetProvider != null) {
-            final Collection<Target> targets = targetProvider.provide();
-            if (targets != null) {
-                channels.addAll(Internal.channelPrefixFor(targets));
-            }
-        }
-        return channels;
-    });
-
+    private final Lazy<Collection<String>> channelPrefixes;
     private final RedisClientProvider clientProvider;
 
     private StatefulRedisConnection<String, String> publishConnection;
@@ -42,6 +29,19 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
     public BrokerRedis(final CodecProvider codecProvider, final RedisClientProvider clientProvider) {
         super(codecProvider);
         this.clientProvider = clientProvider;
+        this.channelPrefixes = Lazy.of(() -> {
+            final ArrayList<String> channels = new ArrayList<>();
+            channels.addAll(Internal.channelPrefixFor(Collections.emptySet()));
+            channels.addAll(Internal.channelPrefixFor(Collections.singleton(this.responderTarget)));
+            final TargetProvider targetProvider = this.targetProvider();
+            if (targetProvider != null) {
+                final Collection<Target> targets = targetProvider.provide();
+                if (targets != null) {
+                    channels.addAll(Internal.channelPrefixFor(targets));
+                }
+            }
+            return channels;
+        });
     }
 
     @Override
