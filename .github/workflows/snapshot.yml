@@ -35,6 +35,11 @@ jobs:
           gpg_private_key: "${{ secrets.GPG_PRIVATE_KEY }}"
           passphrase: "${{ secrets.GPG_PASSPHRASE }}"
 
+      - uses: release-drafter/release-drafter@master
+        id: release
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
       - run: |
           [[ "${{ steps.release.outputs.tag_name }}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
           chmod +x gradlew
