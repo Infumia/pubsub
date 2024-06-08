@@ -11,12 +11,23 @@ repositories {
 dependencies {
     // Base module
     implementation "tr.com.infumia:pubsub:VERSION"
+
     // Pub/Sub using Redis (Optional)
     implementation "tr.com.infumia:pubsub-redis:VERSION"
+    // https://mvnrepository.com/artifact/io.lettuce/lettuce-core/
+    implementation "io.lettuce:lettuce-core:6.3.2.RELEASE" // required
+
     // Kotlin extensions (Optional)
     implementation "tr.com.infumia:pubsub-kotlin:VERSION"
+
     // Kotlin protobuf serializer (Optional)
     implementation "tr.com.infumia:pubsub-kotlin-protobuf:VERSION"
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect/
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.0" // required
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-core/
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.0" // required
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-protobuf/
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.7.0" // required
 }
 ```
 ```java
