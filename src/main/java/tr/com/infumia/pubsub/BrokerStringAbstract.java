@@ -4,7 +4,6 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import tr.com.infumia.pubsub.codec.CodecProvider;
 
-import java.nio.ByteOrder;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -129,7 +128,7 @@ public abstract class BrokerStringAbstract implements Broker {
     protected abstract void sendData(Collection<String> channels, String serializedData);
 
     private void sendEnvelope(final Envelope envelope, final Collection<String> channels) {
-        this.sendData(channels, Hex.encode(this.codecProvider.provide(Envelope.class).encode(envelope), ByteOrder.BIG_ENDIAN));
+        this.sendData(channels, Hex.encode(this.codecProvider.provide(Envelope.class).encode(envelope)));
     }
 
     private void handleResponderEnvelope(final Envelope envelope) {

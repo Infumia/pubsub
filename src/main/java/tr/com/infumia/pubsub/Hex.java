@@ -21,7 +21,6 @@
 
 package tr.com.infumia.pubsub;
 
-import java.nio.ByteOrder;
 import java.util.Objects;
 
 /**
@@ -30,23 +29,18 @@ import java.util.Objects;
 final class Hex {
     private static final char[] LOOKUP_TABLE_LOWER = new char[]{0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66};
 
-    static String encode(final byte[] byteArray, final ByteOrder byteOrder) {
-
+    static String encode(final byte[] byteArray) {
         final char[] buffer = new char[byteArray.length * 2];
         final char[] lookup = Hex.LOOKUP_TABLE_LOWER;
 
-        int index;
         for (int i = 0; i < byteArray.length; i++) {
-            index = (byteOrder == ByteOrder.BIG_ENDIAN) ? i : byteArray.length - i - 1;
-
-            buffer[i << 1] = lookup[(byteArray[index] >> 4) & 0xF];
-            buffer[(i << 1) + 1] = lookup[(byteArray[index] & 0xF)];
+            buffer[i << 1] = lookup[(byteArray[i] >> 4) & 0xF];
+            buffer[(i << 1) + 1] = lookup[(byteArray[i] & 0xF)];
         }
         return new String(buffer);
     }
 
     static byte[] decode(final CharSequence hexString) {
-
         int start;
         if (Objects.requireNonNull(hexString).length() > 2 &&
             hexString.charAt(0) == '0' && hexString.charAt(1) == 'x') {
