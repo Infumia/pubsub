@@ -1,6 +1,7 @@
 plugins {
     java
-    alias(libs.plugins.indra.publishing.sonatype)
+    `maven-publish`
+    alias(libs.plugins.nexus)
 }
 
 repositories.mavenCentral()
@@ -17,13 +18,35 @@ subprojects {
     }
 
     tasks {
-        compileJava {
-            options.compilerArgs.add("-Xlint:-processing")
-            options.compilerArgs.add("-Xlint:-options")
+        compileJava { options.encoding = Charsets.UTF_8.name() }
+
+        javadoc {
+            options.encoding = Charsets.UTF_8.name()
+            (options as StandardJavadocDocletOptions).tags("todo")
+        }
+
+        val javadocJar by creating(Jar::class) {
+            dependsOn("javadoc")
+            archiveClassifier.set("javadoc")
+            from(javadoc)
+        }
+
+        val sourcesJar by creating(Jar::class) {
+            dependsOn("classes")
+            archiveClassifier.set("sources")
+            from(sourceSets["main"].allSource)
+        }
+
+        build {
+            dependsOn(jar)
+            dependsOn(sourcesJar)
+            dependsOn(javadocJar)
         }
     }
 }
 
-indraSonatype {
-    useAlternateSonatypeOSSHost("s01")
+nexusPublishing.repositories.sonatype {
+    val baseUrl = "https://s01.oss.sonatype.org/"
+    nexusUrl = uri("${baseUrl}service/local/")
+    snapshotRepositoryUrl = uri("${baseUrl}content/repositories/snapshots/")
 }
