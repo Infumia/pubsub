@@ -9,9 +9,13 @@ repositories {
 }
 
 dependencies {
+    // Base module
     implementation "tr.com.infumia:pubsub:VERSION"
+    // Pub/Sub using Redis
     implementation "tr.com.infumia:pubsub-redis:VERSION"
+    // Kotlin extensions
     implementation "tr.com.infumia:pubsub-kotlin:VERSION"
+    // Kotlin protobuf serializer
     implementation "tr.com.infumia:pubsub-kotlin-protobuf:VERSION"
 }
 ```
