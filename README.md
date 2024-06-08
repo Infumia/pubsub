@@ -2,7 +2,7 @@
 ![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/tr.com.infumia/pubsub?label=maven-central&server=https%3A%2F%2Foss.sonatype.org%2F)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/tr.com.infumia/pubsub?label=maven-central&server=https%3A%2F%2Foss.sonatype.org)
 ## How to Use (Developers)
-### Code
+### Gradle
 ```groovy
 repositories {
   maven("https://jitpack.io/")
@@ -33,6 +33,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.7.0"
 }
 ```
+### Code
 ```java
 void pubsub() {}
 ```
