@@ -4,7 +4,7 @@
 ### Gradle
 ```groovy
 repositories {
-  maven("https://jitpack.io/")
+  mavenCentral()
 }
 
 dependencies {
