@@ -4,7 +4,7 @@
 ### Gradle
 ```groovy
 repositories {
-  maven("https://jitpack.io/")
+    mavenCentral()
 }
 
 dependencies {
@@ -18,6 +18,11 @@ dependencies {
     implementation "net.infumia:pubsub-redis:VERSION"
     // Required, https://mvnrepository.com/artifact/io.lettuce/lettuce-core/
     implementation "io.lettuce:lettuce-core:6.3.2.RELEASE"
+
+    // A simple codec using Jackson (Optional)
+    implementation "net.infumia:pubsub-jackson:VERSION"
+    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.17.1"
 
     // Kotlin extensions (Optional)
     implementation "net.infumia:pubsub-kotlin:VERSION"
@@ -33,6 +38,29 @@ dependencies {
 }
 ```
 ### Code
-```java
-void pubsub() {}
+```kotlin
+fun main() {
+    val mapper = ObjectMapper()
+    val redisCredentials = RedisCredentials.just(null, "local")
+    val redisAuth = StaticCredentialsProvider(redisCredentials)
+    val redisUri = RedisURI.builder()
+        .withHost("localhost")
+        .withPort(6379)
+        .withAuthentication(redisAuth)
+        .build()
+    val client = RedisClient.create(redisUri)
+    val codecProviderJackson = CodecProviderJackson { mapper }
+    val codecProvider = CodecProviderCached(codecProviderJackson)
+    val broker = BrokerRedisNoTargetProvider(codecProvider) { client }
+    broker.initialize()
+    broker.listen<Test> {
+        println(it.test)
+    }
+    while (true) {
+        broker.send(Test("Hello World"))
+        Thread.sleep(1000L)
+    }
+}
+
+class Test(var test: String = "")
 ```
