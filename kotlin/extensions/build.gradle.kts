@@ -1,7 +1,3 @@
-plugins {
-    alias(libs.plugins.dokka)
-}
-
 dependencies {
     compileOnly(project(":common"))
 }

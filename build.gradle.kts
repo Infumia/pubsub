@@ -1,10 +1,13 @@
+import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.dokka.gradle.DokkaPlugin
 
 plugins {
     java
     `maven-publish`
     alias(libs.plugins.nexus)
+    alias(libs.plugins.dokka) apply false
 }
 
 repositories.mavenCentral()
@@ -12,6 +15,9 @@ repositories.mavenCentral()
 subprojects {
     apply<JavaPlugin>()
     apply<MavenPublishPlugin>()
+    if (project.name.contains("kotlin")) {
+        apply<DokkaPlugin>()
+    }
 
     repositories.mavenCentral()
 
@@ -53,7 +59,7 @@ subprojects {
 
     mavenPublishing {
         coordinates("net.infumia", projectName, project.version.toString())
-        publishToMavenCentral(SonatypeHost.S01, true)
+        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
         if (signRequired) {
             signAllPublications()
         }
