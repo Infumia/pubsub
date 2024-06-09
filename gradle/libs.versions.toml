@@ -14,4 +14,4 @@ kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-seria
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
-nexus = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
+nexus = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
