@@ -46,7 +46,7 @@ subprojects {
 }
 
 nexusPublishing.repositories.sonatype {
-    val baseUrl = "https://oss.sonatype.org/"
+    val baseUrl = "https://s01.oss.sonatype.org/"
     nexusUrl = uri("${baseUrl}service/local/")
     snapshotRepositoryUrl = uri("${baseUrl}content/repositories/snapshots/")
 }
