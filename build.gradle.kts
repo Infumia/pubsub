@@ -34,7 +34,7 @@ subprojects {
     val signRequired = project.hasProperty("sign-required")
 
     mavenPublishing {
-        coordinates("net.infumia", projectName, project.version.toString())
+        coordinates(project.group.toString(), projectName, project.version.toString())
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
         if (signRequired) {
             signAllPublications()
