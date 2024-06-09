@@ -159,6 +159,6 @@ public abstract class BrokerStringAbstract implements Broker {
     }
 
     private String messageTypeId(final Class<?> messageType) {
-        return messageType.toString();
+        return messageType.getTypeName();
     }
 }
