@@ -1,11 +1,11 @@
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.gradle.DokkaPlugin
 
 plugins {
     java
-    `maven-publish`
-    alias(libs.plugins.nexus)
+    alias(libs.plugins.nexus) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.dokka) apply false
 }
@@ -26,14 +26,26 @@ subprojects {
         toolchain {
             languageVersion = JavaLanguageVersion.of(8)
         }
-        withJavadocJar()
-        withSourcesJar()
+    }
+
+    tasks {
+        val javadocJar by creating(Jar::class) {
+            dependsOn("javadoc")
+            archiveClassifier.set("javadoc")
+            from(javadoc)
+        }
+
+        val sourcesJar by creating(Jar::class) {
+            dependsOn("classes")
+            archiveClassifier.set("sources")
+            from(sourceSets["main"].allSource)
+        }
     }
 
     val projectName = project.property("artifact-id") as String
     val signRequired = project.hasProperty("sign-required")
 
-    mavenPublishing {
+    extensions.configure<MavenPublishBaseExtension> {
         coordinates(project.group.toString(), projectName, project.version.toString())
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
         if (signRequired) {
