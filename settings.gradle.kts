@@ -4,7 +4,7 @@ plugins {
 
 rootProject.name = "pubsub"
 
-include("common", "redis", "kotlin-extensions", "kotlin-protobuf")
+include("common", "redis", "jackson", "kotlin-extensions", "kotlin-protobuf")
 
 project(":kotlin-extensions").projectDir = file("kotlin/extensions")
 project(":kotlin-protobuf").projectDir = file("kotlin/protobuf")

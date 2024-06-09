@@ -56,7 +56,10 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
                 BrokerRedis.this.callHandlers(channel, message);
             }
         });
-        this.subscribeConnection.sync().psubscribe(this.channelPrefixes.get().toArray(new String[0]));
+        final String[] channels = this.channelPrefixes.get().stream()
+            .map(s -> s + "*")
+            .toArray(String[]::new);
+        this.subscribeConnection.sync().psubscribe(channels);
     }
 
     @Override

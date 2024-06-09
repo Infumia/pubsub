@@ -5,13 +5,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 final class Envelope {
-    final UUID brokerId;
-    final UUID messageId;
+    UUID brokerId;
+    UUID messageId;
     /**
      * Can be {@code null}.
      */
-    final UUID respondsTo;
-    final byte[] messagePayload;
+    UUID respondsTo;
+    byte[] messagePayload;
+
+    Envelope() {}
 
     Envelope(
         final UUID brokerId,
