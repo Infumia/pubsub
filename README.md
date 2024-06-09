@@ -19,6 +19,11 @@ dependencies {
     // Required, https://mvnrepository.com/artifact/io.lettuce/lettuce-core/
     implementation "io.lettuce:lettuce-core:6.3.2.RELEASE"
 
+    // A simple codec using Jackson (Optional)
+    implementation "net.infumia:pubsub-jackson:VERSION"
+    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.17.1"
+
     // Kotlin extensions (Optional)
     implementation "net.infumia:pubsub-kotlin:VERSION"
 
