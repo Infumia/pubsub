@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.gradle.DokkaPlugin
@@ -7,6 +6,8 @@ plugins {
     java
     `maven-publish`
     alias(libs.plugins.nexus)
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.dokka) apply false
 }
 
