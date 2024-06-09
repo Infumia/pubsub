@@ -1,5 +1,5 @@
 plugins {
-    id("tr.com.infumia.pubsub.build.publishing")
+    id("net.infumia.pubsub.build.publishing")
 }
 
 dependencies {
