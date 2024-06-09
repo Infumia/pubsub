@@ -1,5 +1,5 @@
 # pubsub
-![Maven Central Version](https://img.shields.io/maven-central/v/net.infumia/pubsub)
+[![Maven Central Version](https://img.shields.io/maven-central/v/net.infumia/pubsub)](https://central.sonatype.com/artifact/net.infumia/pubsub)
 ## How to Use (Developers)
 ### Gradle
 ```groovy
@@ -60,6 +60,8 @@ fun main() {
         broker.send(Test("Hello World"))
         Thread.sleep(1000L)
     }
+    // ...
+    broker.close()
 }
 
 class Test(var test: String = "")
