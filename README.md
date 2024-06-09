@@ -1,6 +1,5 @@
 # pubsub
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/net.infumia/pubsub?label=maven-central&server=https%3A%2F%2Foss.sonatype.org%2F)
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.infumia/pubsub?label=maven-central&server=https%3A%2F%2Foss.sonatype.org)
+![Maven Central Version](https://img.shields.io/maven-central/v/net.infumia/pubsub)
 ## How to Use (Developers)
 ### Gradle
 ```groovy
