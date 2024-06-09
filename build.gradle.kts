@@ -7,7 +7,6 @@ plugins {
     `maven-publish`
     alias(libs.plugins.nexus)
     alias(libs.plugins.kotlin) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.dokka) apply false
 }
 
@@ -18,6 +17,7 @@ subprojects {
     apply<MavenPublishPlugin>()
     if (project.name.contains("kotlin")) {
         apply<DokkaPlugin>()
+        apply(plugin = "org.jetbrains.kotlin.jvm")
     }
 
     repositories.mavenCentral()
