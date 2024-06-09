@@ -26,33 +26,8 @@ subprojects {
         toolchain {
             languageVersion = JavaLanguageVersion.of(8)
         }
-    }
-
-    tasks {
-        compileJava { options.encoding = Charsets.UTF_8.name() }
-
-        javadoc {
-            options.encoding = Charsets.UTF_8.name()
-            (options as StandardJavadocDocletOptions).tags("todo")
-        }
-
-        val javadocJar by creating(Jar::class) {
-            dependsOn("javadoc")
-            archiveClassifier.set("javadoc")
-            from(javadoc)
-        }
-
-        val sourcesJar by creating(Jar::class) {
-            dependsOn("classes")
-            archiveClassifier.set("sources")
-            from(sourceSets["main"].allSource)
-        }
-
-        build {
-            dependsOn(jar)
-            dependsOn(sourcesJar)
-            dependsOn(javadocJar)
-        }
+        withJavadocJar()
+        withSourcesJar()
     }
 
     val projectName = project.property("artifact-id") as String
