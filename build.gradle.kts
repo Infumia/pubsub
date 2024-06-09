@@ -40,12 +40,6 @@ subprojects {
             archiveClassifier.set("sources")
             from(sourceSets["main"].allSource)
         }
-
-        build {
-            dependsOn(jar)
-            dependsOn(sourcesJar)
-            dependsOn(javadocJar)
-        }
     }
 
     val projectName = project.property("artifact-id") as String
