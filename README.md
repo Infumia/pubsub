@@ -60,6 +60,8 @@ fun main() {
         broker.send(Test("Hello World"))
         Thread.sleep(1000L)
     }
+    // ...
+    broker.close()
 }
 
 class Test(var test: String = "")
