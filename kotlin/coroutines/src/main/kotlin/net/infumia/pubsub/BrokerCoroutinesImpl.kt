@@ -23,6 +23,10 @@ internal class BrokerCoroutinesImpl(
         this.delegate.send(message, *targets)
     }
 
+    override suspend fun send(message: Any, vararg targets: Pair<String, String>) {
+        this.delegate.send(message, targets.map { Target.of(it.first, it.second) })
+    }
+
     override suspend fun <T : Any> listen(handler: HandlerCoroutines<T>): AutoCloseable =
         this.delegate.listen(handler.type.java) { scope.launch { handler(it) } }
 
