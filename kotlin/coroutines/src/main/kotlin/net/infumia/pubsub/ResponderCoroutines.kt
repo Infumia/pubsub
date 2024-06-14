@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
  * @param T the type of the message to be handled.
  * @param Y the type of the response.
  */
-interface ResponderCoroutines<T : Any, Y : Any> : (T) -> Y? {
+interface ResponderCoroutines<T : Any, Y : Any> : suspend (T) -> Y? {
     /**
      * Retrieves the class type of the message being handled.
      *

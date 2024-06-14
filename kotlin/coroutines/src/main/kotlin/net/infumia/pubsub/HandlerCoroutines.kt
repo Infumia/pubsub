@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
  *
  * @param T the type of the message to be handled.
  */
-interface HandlerCoroutines<T : Any> : (T) -> Unit {
+interface HandlerCoroutines<T : Any> : suspend (T) -> Unit {
     /**
      * Retrieves the class type of the message being handled.
      *
