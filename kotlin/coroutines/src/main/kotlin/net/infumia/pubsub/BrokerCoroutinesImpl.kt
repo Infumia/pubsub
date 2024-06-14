@@ -24,7 +24,7 @@ internal class BrokerCoroutinesImpl(
     }
 
     override suspend fun <T : Any> listen(handler: HandlerCoroutines<T>): AutoCloseable =
-        this.delegate.listen(handler.type.java) { scope.launch { handler.handle(it) } }
+        this.delegate.listen(handler.type.java) { scope.launch { handler(it) } }
 
     override suspend fun <T : Any> listen(type: KClass<T>, handler: suspend (T) -> Unit): AutoCloseable =
         this.delegate.listen(type.java) { scope.launch { handler(it) } }
@@ -50,7 +50,7 @@ internal class BrokerCoroutinesImpl(
         this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, *targets).await()
 
     override suspend fun <T : Any, Y: Any> respond(responder: ResponderCoroutines<T, Y>): AutoCloseable =
-        this.delegate.respond(responder.type.java) { scope.launch { responder.handle(it) } }
+        this.delegate.respond(responder.type.java) { scope.launch { responder(it) } }
 
     override suspend fun <T : Any, Y : Any> respond(type: KClass<T>, responder: suspend (T) -> Y?): AutoCloseable =
         this.delegate.respond(type.java) { scope.launch { responder(it) } }
