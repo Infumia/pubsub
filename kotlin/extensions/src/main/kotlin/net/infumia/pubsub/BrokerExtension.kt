@@ -2,6 +2,17 @@ package net.infumia.pubsub
 
 import java.util.concurrent.CompletableFuture
 
+
+/**
+ * Sends a message to the specified targets.
+ *
+ * @param message the message to send.
+ * @param targets the targets to send the message to.
+ */
+fun Broker.send(message: Any, vararg targets: Pair<String, String>) {
+    this.send(message, targets.map { Target.of(it.first, it.second) })
+}
+
 /**
  * Registers a handler to listen for messages of a specific type.
  *
@@ -10,7 +21,7 @@ import java.util.concurrent.CompletableFuture
  * @return an [AutoCloseable] that can be used to unregister the handler.
  */
 inline fun <reified T : Any> Broker.listen(noinline handler: (T) -> Unit): AutoCloseable =
-    listen(T::class.java, handler)
+    this.listen(T::class.java, handler)
 
 /**
  * Sends a message and expects a response of a specific type.
@@ -21,7 +32,7 @@ inline fun <reified T : Any> Broker.listen(noinline handler: (T) -> Unit): AutoC
  * @return a [CompletableFuture] representing the response to the message.
  */
 inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target): CompletableFuture<R> =
-    request(message, R::class.java, *targets)
+    this.request(message, R::class.java, *targets)
 
 /**
  * Registers a function to respond to messages of a specific type.
@@ -32,4 +43,4 @@ inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target
  * @return an [AutoCloseable] that can be used to unregister the responder.
  */
 inline fun <reified T : Any, R : Any> Broker.respond(noinline handler: (T) -> R?): AutoCloseable =
-    respond(T::class.java, handler)
+    this.respond(T::class.java, handler)

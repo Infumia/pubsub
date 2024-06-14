@@ -29,6 +29,14 @@ interface BrokerCoroutines : AutoCloseable {
     suspend fun send(message: Any, vararg targets: Target)
 
     /**
+     * Sends a message to the specified targets.
+     *
+     * @param message the message to send.
+     * @param targets the targets to send the message to.
+     */
+    suspend fun send(message: Any, vararg targets: Pair<String, String>)
+
+    /**
      * Registers a handler to listen for messages of a specific type.
      *
      * @param T the type of the message to listen for.
