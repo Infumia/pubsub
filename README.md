@@ -21,11 +21,16 @@ dependencies {
 
     // A simple codec using Jackson (Optional)
     implementation "net.infumia:pubsub-jackson:VERSION"
-    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/
     implementation "com.fasterxml.jackson.core:jackson-databind:2.17.1"
 
     // Kotlin extensions (Optional)
     implementation "net.infumia:pubsub-kotlin:VERSION"
+
+    // Kotlin coroutines (Optional)
+    implementation "net.infumia:pubsub-kotlin-coroutines:VERSION"
+    // Required, https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core/
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
 
     // Kotlin protobuf serializer (Optional)
     implementation "net.infumia:pubsub-kotlin-protobuf:VERSION"

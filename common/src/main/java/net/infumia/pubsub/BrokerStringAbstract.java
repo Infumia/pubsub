@@ -4,13 +4,17 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
- * Abstract class for a message broker that operates with strings and supports sending, receiving, and responding to messages.
+ * Abstract class for a message broker that operates with strings and supports sending, receiving,
+ * and responding to messages.
  */
 public abstract class BrokerStringAbstract implements Broker {
     private final UUID brokerId = UUID.randomUUID();
@@ -45,12 +49,26 @@ public abstract class BrokerStringAbstract implements Broker {
     }
 
     @Override
-    public final AutoCloseable listen(final Handler<?> handler) {
-        return this.respond(new HandlerToResponder<>(handler));
+    public void send(final Object message, final Target... targets) {
+        this.send(message, Arrays.asList(targets));
     }
 
     @Override
-    public final <R> CompletableFuture<R> request(final Object message, final Class<R> responseType, final Duration timeout, final Collection<Target> targets) {
+    public final <T> AutoCloseable listen(final Handler<T> handler) {
+        return this.listen(handler.type(), handler);
+    }
+
+    @Override
+    public <T> AutoCloseable listen(final Class<T> type, final Consumer<T> handler) {
+        return this.respond(type, message -> {
+            handler.accept(message);
+            return null;
+        });
+    }
+
+    @Override
+    public final <R> CompletableFuture<R> request(final Object message, final Class<R> responseType,
+                                                  final Duration timeout, final Collection<Target> targets) {
         final Envelope envelope = Internal.newEnvelope(this.codecProvider, this.brokerId, message);
         final AwaitingResponder<R> responder = new AwaitingResponder<>(responseType);
         this.awaitingResponders.put(envelope.messageId, responder);
@@ -59,8 +77,41 @@ public abstract class BrokerStringAbstract implements Broker {
     }
 
     @Override
-    public final AutoCloseable respond(final Responder<?, ?> responder) {
+    public <R> CompletableFuture<R> request(final Object message, final Class<R> responseType, final Duration timeout,
+                                            final Target... targets) {
+        return this.request(message, responseType, timeout, Arrays.asList(targets));
+    }
+
+    @Override
+    public <R> CompletableFuture<R> request(final Object message, final Class<R> responseType,
+                                            final Collection<Target> targets) {
+        return this.request(message, responseType, Internal.REQUEST_TIMEOUT, targets);
+    }
+
+    @Override
+    public <R> CompletableFuture<R> request(final Object message, final Class<R> responseType,
+                                            final Target... targets) {
+        return this.request(message, responseType, Internal.REQUEST_TIMEOUT, targets);
+    }
+
+    @Override
+    public final <T, Y> AutoCloseable respond(final Responder<T, Y> responder) {
         return this.handlerRegistry.register(this.messageTypeId(responder.type()), responder);
+    }
+
+    @Override
+    public <T, Y> AutoCloseable respond(final Class<T> type, final Function<T, Y> responder) {
+        return this.respond(new Responder<T, Y>() {
+            @Override
+            public Class<T> type() {
+                return type;
+            }
+
+            @Override
+            public Y apply(final T message) {
+                return responder.apply(message);
+            }
+        });
     }
 
     @Override
@@ -146,7 +197,7 @@ public abstract class BrokerStringAbstract implements Broker {
         final Responder<T, Y> responder
     ) {
         final T decoded = this.codecProvider.provide(responder.type()).decode(envelope.messagePayload);
-        final Y response = responder.handle(decoded);
+        final Y response = responder.apply(decoded);
         if (response == null) {
             return null;
         } else {
