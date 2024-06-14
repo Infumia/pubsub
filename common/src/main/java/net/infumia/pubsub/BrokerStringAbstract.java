@@ -54,6 +54,11 @@ public abstract class BrokerStringAbstract implements Broker {
     }
 
     @Override
+    public void send(final Object message) {
+        this.send(message, Collections.emptySet());
+    }
+
+    @Override
     public final <T> AutoCloseable listen(final Handler<T> handler) {
         return this.listen(handler.type(), handler);
     }

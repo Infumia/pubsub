@@ -27,6 +27,10 @@ internal class BrokerCoroutinesImpl(
         this.delegate.send(message, targets.map { Target.of(it.first, it.second) })
     }
 
+    override suspend fun send(message: Any) {
+        this.delegate.send(message)
+    }
+
     override suspend fun <T : Any> listen(handler: HandlerCoroutines<T>): AutoCloseable =
         this.delegate.listen(handler.type.java) { scope.launch { handler(it) } }
 
@@ -60,6 +64,13 @@ internal class BrokerCoroutinesImpl(
             targets.map { Target.of(it.first, it.second) }
         ).await()
 
+    override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, timeout: Duration): R =
+        this.delegate.request(
+            message,
+            responseType.java,
+            timeout.toJavaDuration()
+        ).await()
+
     override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, targets: Collection<Target>): R =
         this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, targets).await()
 
@@ -76,6 +87,13 @@ internal class BrokerCoroutinesImpl(
             responseType.java,
             Internal.REQUEST_TIMEOUT,
             targets.map { Target.of(it.first, it.second) }
+        ).await()
+
+    override suspend fun <R : Any> request(message: Any, responseType: KClass<R>): R =
+        this.delegate.request(
+            message,
+            responseType.java,
+            Internal.REQUEST_TIMEOUT
         ).await()
 
     override suspend fun <T : Any, Y: Any> respond(responder: ResponderCoroutines<T, Y>): AutoCloseable =
