@@ -90,6 +90,23 @@ interface BrokerCoroutines : AutoCloseable {
     ): R
 
     /**
+     * Sends a request and awaits a response within a specified timeout.
+     *
+     * @param R the type of the response.
+     * @param message the request message.
+     * @param responseType the KClass representing the expected response type.
+     * @param timeout the duration to wait for a response.
+     * @param targets the targets to send the request to.
+     * @return the response to the request.
+     */
+    suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        timeout: Duration,
+        vararg targets: Pair<String, String>
+    ): R
+
+    /**
      * Sends a request and awaits a response using the default timeout.
      *
      * @param R the type of the response.
@@ -110,6 +127,17 @@ interface BrokerCoroutines : AutoCloseable {
      * @return the response to the request.
      */
     suspend fun <R : Any> request(message: Any, responseType: KClass<R>, vararg targets: Target): R
+
+    /**
+     * Sends a request and awaits a response using the default timeout.
+     *
+     * @param R the type of the response.
+     * @param message the request message.
+     * @param responseType the KClass representing the expected response type.
+     * @param targets the targets to send the request to.
+     * @return the response to the request.
+     */
+    suspend fun <R : Any> request(message: Any, responseType: KClass<R>, vararg targets: Pair<String, String>): R
 
     /**
      * Registers a responder to handle incoming messages of a specific type and produce a response.
@@ -175,6 +203,19 @@ suspend inline fun <reified R : Any> BrokerCoroutines.request(
 suspend inline fun <reified R : Any> BrokerCoroutines.request(
     message: Any,
     vararg targets: Target
+): R = request(message, R::class, *targets)
+
+/**
+ * Sends a request and awaits a response using the default timeout.
+ *
+ * @param R the type of the response.
+ * @param message the request message.
+ * @param targets the targets to send the request to.
+ * @return the response to the request.
+ */
+suspend inline fun <reified R : Any> BrokerCoroutines.request(
+    message: Any,
+    vararg targets: Pair<String, String>
 ): R = request(message, R::class, *targets)
 
 /**
