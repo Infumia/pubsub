@@ -36,6 +36,15 @@ public interface Broker extends AutoCloseable {
     void send(Object message, Target... targets);
 
     /**
+     * Sends a message globally.
+     * <p>
+     * Sends to {@link Target#global()} if {@code targets} is not specified.
+     *
+     * @param message the message to send. Cannot be {@code null}
+     */
+    void send(Object message);
+
+    /**
      * Listens for messages using a handler.
      *
      * @param handler the handler to process incoming messages. Cannot be {@code null}

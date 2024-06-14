@@ -2,7 +2,6 @@ package net.infumia.pubsub
 
 import java.util.concurrent.CompletableFuture
 
-
 /**
  * Sends a message to the specified targets.
  *
@@ -24,7 +23,7 @@ inline fun <reified T : Any> Broker.listen(noinline handler: (T) -> Unit): AutoC
     this.listen(T::class.java, handler)
 
 /**
- * Sends a message and expects a response of a specific type.
+ * Sends a message and expects a specific response.
  *
  * @param message the message to send.
  * @param targets the targets to send the message to.
@@ -35,7 +34,7 @@ inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target
     this.request(message, R::class.java, *targets)
 
 /**
- * Sends a message and expects a response of a specific type.
+ * Sends a message and expects a specific response.
  *
  * @param message the message to send.
  * @param targets the targets to send the message to.
@@ -44,6 +43,16 @@ inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target
  */
 inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Pair<String, String>): CompletableFuture<R> =
     this.request(message, R::class.java, targets.map { Target.of(it.first, it.second) })
+
+/**
+ * Sends a message and expects a specific response.
+ *
+ * @param message the message to send.
+ * @param R the type of the expected response.
+ * @return a [CompletableFuture] representing the response to the message.
+ */
+inline fun <reified R : Any> Broker.request(message: Any): CompletableFuture<R> =
+    this.request(message, R::class.java)
 
 /**
  * Registers a function to respond to messages of a specific type.
