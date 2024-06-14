@@ -35,6 +35,17 @@ inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target
     this.request(message, R::class.java, *targets)
 
 /**
+ * Sends a message and expects a response of a specific type.
+ *
+ * @param message the message to send.
+ * @param targets the targets to send the message to.
+ * @param R the type of the expected response.
+ * @return a [CompletableFuture] representing the response to the message.
+ */
+inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Pair<String, String>): CompletableFuture<R> =
+    this.request(message, R::class.java, targets.map { Target.of(it.first, it.second) })
+
+/**
  * Registers a function to respond to messages of a specific type.
  *
  * @param handler the function to handle incoming messages of type [T] and produce a response of type [R].

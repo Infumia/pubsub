@@ -47,11 +47,36 @@ internal class BrokerCoroutinesImpl(
         vararg targets: Target
     ): R = this.delegate.request(message, responseType.java, timeout.toJavaDuration(), *targets).await()
 
+    override suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        timeout: Duration,
+        vararg targets: Pair<String, String>
+    ): R =
+        this.delegate.request(
+            message,
+            responseType.java,
+            timeout.toJavaDuration(),
+            targets.map { Target.of(it.first, it.second) }
+        ).await()
+
     override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, targets: Collection<Target>): R =
         this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, targets).await()
 
     override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, vararg targets: Target): R =
         this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, *targets).await()
+
+    override suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        vararg targets: Pair<String, String>
+    ): R =
+        this.delegate.request(
+            message,
+            responseType.java,
+            Internal.REQUEST_TIMEOUT,
+            targets.map { Target.of(it.first, it.second) }
+        ).await()
 
     override suspend fun <T : Any, Y: Any> respond(responder: ResponderCoroutines<T, Y>): AutoCloseable =
         this.delegate.respond(responder.type.java) { scope.launch { responder(it) } }
