@@ -42,7 +42,8 @@ subprojects {
         }
     }
 
-    val projectName = project.property("artifact-id") as String
+    val moduleName = project.findProperty("artifact-id") as String?
+    val projectName = "pubsub${if (moduleName == null) "" else "-$moduleName"}"
     val signRequired = project.hasProperty("sign-required")
 
     extensions.configure<MavenPublishBaseExtension> {

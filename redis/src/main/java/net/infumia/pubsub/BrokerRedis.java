@@ -8,6 +8,7 @@ import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public abstract class BrokerRedis extends BrokerStringAbstract {
     private final Lazy<Collection<String>> channelPrefixes;
     private final RedisClientProvider clientProvider;
+    private final Executor executor;
 
     private StatefulRedisConnection<String, String> publishConnection;
     private StatefulRedisPubSubConnection<String, String> subscribeConnection;
@@ -23,12 +25,15 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
     /**
      * Ctor.
      *
-     * @param codecProvider   the CodecProvider used for encoding and decoding messages. Cannot be null.
-     * @param clientProvider  the RedisClientProvider used for obtaining Redis client connections. Cannot be null.
+     * @param codecProvider  the CodecProvider used for encoding and decoding messages. Cannot be null.
+     * @param clientProvider the RedisClientProvider used for getting Redis client connections. Cannot be null.
+     * @param executor       the Executor used for calling handlers whenever redis receives a messages. Can be null.
      */
-    public BrokerRedis(final CodecProvider codecProvider, final RedisClientProvider clientProvider) {
+    public BrokerRedis(final CodecProvider codecProvider, final RedisClientProvider clientProvider,
+                       final Executor executor) {
         super(codecProvider);
         this.clientProvider = clientProvider;
+        this.executor = executor;
         this.channelPrefixes = Lazy.of(() -> {
             final ArrayList<String> channels = new ArrayList<>();
             channels.addAll(Internal.channelPrefixFor(Collections.emptySet()));
@@ -44,8 +49,19 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
         });
     }
 
+    /**
+     * Ctor.
+     *
+     * @param codecProvider  the CodecProvider used for encoding and decoding messages. Cannot be null.
+     * @param clientProvider the RedisClientProvider used for getting Redis client connections. Cannot be null.
+     */
+    public BrokerRedis(final CodecProvider codecProvider, final RedisClientProvider clientProvider) {
+        this(codecProvider, clientProvider, null);
+    }
+
     @Override
     protected void connect() {
+        final Executor executor = BrokerRedis.this.executor;
         final RedisClient client = this.clientProvider.provide();
         this.publishConnection = client.connect();
         this.subscribeConnection = client.connectPubSub();
@@ -53,7 +69,11 @@ public abstract class BrokerRedis extends BrokerStringAbstract {
         this.subscribeConnection.addListener(new RedisPubSubAdapter<String, String>() {
             @Override
             public void message(final String pattern, final String channel, final String message) {
-                BrokerRedis.this.callHandlers(channel, message);
+                if (executor == null) {
+                    BrokerRedis.this.callHandlers(channel, message);
+                } else {
+                    executor.execute(() -> BrokerRedis.this.callHandlers(channel, message));
+                }
             }
         });
         final String[] channels = this.channelPrefixes.get().stream()

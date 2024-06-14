@@ -8,8 +8,9 @@ repositories {
 }
 
 dependencies {
-    // Base module
+    // Base modules
     implementation "net.infumia:pubsub:VERSION"
+    implementation "net.infumia:pubsub-codec:VERSION"
     // Required, https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine/
     implementation "com.github.ben-manes.caffeine:caffeine:2.9.3" // for java-8+
     implementation "com.github.ben-manes.caffeine:caffeine:3.1.8" // for java-11+
@@ -21,11 +22,16 @@ dependencies {
 
     // A simple codec using Jackson (Optional)
     implementation "net.infumia:pubsub-jackson:VERSION"
-    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    // Required, https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/
     implementation "com.fasterxml.jackson.core:jackson-databind:2.17.1"
 
     // Kotlin extensions (Optional)
     implementation "net.infumia:pubsub-kotlin:VERSION"
+
+    // Kotlin coroutines (Optional)
+    implementation "net.infumia:pubsub-kotlin-coroutines:VERSION"
+    // Required, https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core/
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
 
     // Kotlin protobuf serializer (Optional)
     implementation "net.infumia:pubsub-kotlin-protobuf:VERSION"
