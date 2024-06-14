@@ -3,7 +3,7 @@ package net.infumia.pubsub;
 /**
  * The interface for encoding and decoding objects of type {@link T} to and from byte arrays.
  *
- * @param <T> the type of the object to be encoded and decoded.
+ * @param <T> type of the object to be encoded and decoded.
  */
 public interface Codec<T> {
     /**
@@ -17,7 +17,7 @@ public interface Codec<T> {
     /**
      * Decodes a byte array into an object of type {@link T}.
      *
-     * @param bytes the byte array to decode.
+     * @param bytes the bytes array to decode.
      * @return the decoded object.
      */
     T decode(byte[] bytes);

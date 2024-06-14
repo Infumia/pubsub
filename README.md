@@ -8,8 +8,9 @@ repositories {
 }
 
 dependencies {
-    // Base module
+    // Base modules
     implementation "net.infumia:pubsub:VERSION"
+    implementation "net.infumia:pubsub-codec:VERSION"
     // Required, https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine/
     implementation "com.github.ben-manes.caffeine:caffeine:2.9.3" // for java-8+
     implementation "com.github.ben-manes.caffeine:caffeine:3.1.8" // for java-11+

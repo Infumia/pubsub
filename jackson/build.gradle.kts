@@ -1,5 +1,5 @@
 dependencies {
-    compileOnly(project(":common"))
+    compileOnly(project(":codec"))
 
     compileOnly(libs.jackson)
 }

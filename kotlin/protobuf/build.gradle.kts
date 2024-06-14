@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly(project(":common"))
+    compileOnly(project(":codec"))
 
     compileOnly(libs.kotlin.reflect)
     compileOnly(libs.kotlinx.serialization.core)
