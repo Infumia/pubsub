@@ -15,7 +15,7 @@ fun Project.publish(
     applyCommon(javaVersion, sources, javadoc)
     apply<MavenPublishPlugin>()
 
-    val projectName = "pack${if (moduleName == null) "" else "-$moduleName"}"
+    val projectName = "pubsub${if (moduleName == null) "" else "-$moduleName"}"
     val signRequired = project.hasProperty("sign-required")
 
     extensions.configure<MavenPublishBaseExtension> {
