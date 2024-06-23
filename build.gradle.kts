@@ -1,11 +1,7 @@
 import net.infumia.gradle.spotless
 
-plugins {
-    java
-}
+plugins { java }
 
-subprojects {
-    apply<JavaPlugin>()
-}
+subprojects { apply<JavaPlugin>() }
 
 spotless()

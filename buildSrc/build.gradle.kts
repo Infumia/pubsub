@@ -1,6 +1,4 @@
-plugins {
-    `kotlin-dsl`
-}
+plugins { `kotlin-dsl` }
 
 repositories {
     mavenCentral()
@@ -14,6 +12,4 @@ dependencies {
     implementation(libs.spotless.plugin)
 }
 
-kotlin {
-    jvmToolchain(11)
-}
+kotlin { jvmToolchain(11) }

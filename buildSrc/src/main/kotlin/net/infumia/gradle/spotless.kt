@@ -6,6 +6,8 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.*
 
 fun Project.spotless() {
+    val subProjects = subprojects.map { it.projectDir.toRelativeString(projectDir) }
+
     repositories.mavenCentral()
 
     apply<SpotlessPlugin>()
@@ -53,7 +55,7 @@ fun Project.spotless() {
                 "buildSrc/src/main/kotlin/**/*.kt",
                 "buildSrc/**/*.gradle.kts",
                 "*.gradle.kts",
-                *subprojects.map { it.name }.map { "$it/*.gradle.kts" }.toTypedArray(),
+                *subProjects.map { "$it/*.gradle.kts" }.toTypedArray(),
             )
             endWithNewline()
             trimTrailingWhitespace()
@@ -67,7 +69,7 @@ fun Project.spotless() {
 
         java {
             target(
-                *subprojects.map { it.name }.map { "$it/src/main/java/**/*.java" }.toTypedArray(),
+                *subProjects.map { "$it/src/main/java/**/*.java" }.toTypedArray(),
             )
             importOrder()
             removeUnusedImports()
