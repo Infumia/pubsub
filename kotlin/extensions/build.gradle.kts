@@ -2,6 +2,4 @@ import net.infumia.gradle.publish
 
 publish("kotlin")
 
-dependencies {
-    compileOnly(project(":common"))
-}
+dependencies { compileOnly(project(":common")) }

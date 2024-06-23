@@ -56,6 +56,7 @@ fun Project.spotless() {
                 "buildSrc/**/*.gradle.kts",
                 "*.gradle.kts",
                 *subProjects.map { "$it/*.gradle.kts" }.toTypedArray(),
+                *subProjects.map { "$it/src/main/kotlin/**/*.kt" }.toTypedArray(),
             )
             endWithNewline()
             trimTrailingWhitespace()

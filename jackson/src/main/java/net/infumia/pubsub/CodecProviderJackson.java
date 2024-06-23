@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * A {@link CodecProvider} implementation that uses Jackson for JSON serialization and deserialization.
  */
 public final class CodecProviderJackson implements CodecProvider {
+
     private final JacksonProvider provider;
 
     /**

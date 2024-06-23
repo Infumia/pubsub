@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 final class MultiMap<K, V> {
+
     private final Map<K, Collection<V>> map = new HashMap<>();
 
     MultiMap() {}

@@ -7,6 +7,7 @@ import java.util.Map;
  * A cached implementation of the {@link CodecProvider} interface.
  */
 public final class CodecProviderCached implements CodecProvider {
+
     private final Map<Class<?>, Codec<?>> cache = new HashMap<>();
     private final CodecProvider delegate;
 
@@ -22,7 +23,6 @@ public final class CodecProviderCached implements CodecProvider {
     @Override
     @SuppressWarnings("unchecked")
     public <T> Codec<T> provide(final Class<T> type) {
-        return (Codec<T>) this.cache.computeIfAbsent(type, __ ->
-            this.delegate.provide(type));
+        return (Codec<T>) this.cache.computeIfAbsent(type, __ -> this.delegate.provide(type));
     }
 }

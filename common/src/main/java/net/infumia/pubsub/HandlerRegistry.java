@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
 final class HandlerRegistry {
+
     private final ReentrantLock lock = new ReentrantLock();
     private final MultiMap<String, Responder<?, ?>> handlers = new MultiMap<>();
 
@@ -23,12 +24,12 @@ final class HandlerRegistry {
 
     Collection<Responder<?, ?>> get(final String messageTypeId) {
         return this.withLock(() -> {
-            final Collection<Responder<?, ?>> handlers = this.handlers.get(messageTypeId);
-            if (handlers == null || handlers.isEmpty()) {
-                return null;
-            }
-            return handlers;
-        });
+                final Collection<Responder<?, ?>> handlers = this.handlers.get(messageTypeId);
+                if (handlers == null || handlers.isEmpty()) {
+                    return null;
+                }
+                return handlers;
+            });
     }
 
     private <T> T withLock(final Supplier<T> task) {

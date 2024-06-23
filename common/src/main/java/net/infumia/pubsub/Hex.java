@@ -27,7 +27,25 @@ import java.util.Objects;
  * <a href="https://github.com/patrickfav/bytes-java/blob/main/src/main/java/at/favre/lib/bytes/BinaryToTextEncoding.java">From</a>
  */
 final class Hex {
-    private static final char[] LOOKUP_TABLE_LOWER = new char[]{0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66};
+
+    private static final char[] LOOKUP_TABLE_LOWER = new char[] {
+        0x30,
+        0x31,
+        0x32,
+        0x33,
+        0x34,
+        0x35,
+        0x36,
+        0x37,
+        0x38,
+        0x39,
+        0x61,
+        0x62,
+        0x63,
+        0x64,
+        0x65,
+        0x66,
+    };
 
     static String encode(final byte[] byteArray) {
         final char[] buffer = new char[byteArray.length * 2];
@@ -42,8 +60,11 @@ final class Hex {
 
     static byte[] decode(final CharSequence hexString) {
         int start;
-        if (Objects.requireNonNull(hexString).length() > 2 &&
-            hexString.charAt(0) == '0' && hexString.charAt(1) == 'x') {
+        if (
+            Objects.requireNonNull(hexString).length() > 2 &&
+            hexString.charAt(0) == '0' &&
+            hexString.charAt(1) == 'x'
+        ) {
             start = 2;
         } else {
             start = 0;
@@ -68,9 +89,22 @@ final class Hex {
 
             if (first4Bits == -1 || second4Bits == -1) {
                 if (i == start && isOddLength) {
-                    throw new IllegalArgumentException("'" + hexString.charAt(i + 1) + "' at index " + (i + 1) + " is not hex formatted");
+                    throw new IllegalArgumentException(
+                        "'" +
+                        hexString.charAt(i + 1) +
+                        "' at index " +
+                        (i + 1) +
+                        " is not hex formatted"
+                    );
                 } else {
-                    throw new IllegalArgumentException("'" + hexString.charAt(i) + hexString.charAt(i + 1) + "' at index " + i + " is not hex formatted");
+                    throw new IllegalArgumentException(
+                        "'" +
+                        hexString.charAt(i) +
+                        hexString.charAt(i + 1) +
+                        "' at index " +
+                        i +
+                        " is not hex formatted"
+                    );
                 }
             }
 

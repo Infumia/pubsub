@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 final class Internal {
+
     private static final ScheduledExecutorService DELAYER = Executors.newScheduledThreadPool(1);
     static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(10L);
     static final Duration RESPOND_TIMEOUT = Duration.ofMinutes(1L);

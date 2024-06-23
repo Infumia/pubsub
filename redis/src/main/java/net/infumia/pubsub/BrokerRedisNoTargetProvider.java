@@ -6,6 +6,7 @@ import java.util.concurrent.Executor;
  * A concrete implementation of {@link BrokerRedis} that does not provide a target provider.
  */
 public final class BrokerRedisNoTargetProvider extends BrokerRedis {
+
     /**
      * Ctor.
      *
@@ -13,8 +14,11 @@ public final class BrokerRedisNoTargetProvider extends BrokerRedis {
      * @param clientProvider the RedisClientProvider used for obtaining Redis client connections.
      * @param executor       the Executor used for calling handlers whenever redis receives a messages. Can be null.
      */
-    public BrokerRedisNoTargetProvider(final CodecProvider codecProvider, final RedisClientProvider clientProvider,
-                                       final Executor executor) {
+    public BrokerRedisNoTargetProvider(
+        final CodecProvider codecProvider,
+        final RedisClientProvider clientProvider,
+        final Executor executor
+    ) {
         super(codecProvider, clientProvider, executor);
     }
 
@@ -24,7 +28,10 @@ public final class BrokerRedisNoTargetProvider extends BrokerRedis {
      * @param codecProvider  the CodecProvider used for encoding and decoding messages.
      * @param clientProvider the RedisClientProvider used for obtaining Redis client connections.
      */
-    public BrokerRedisNoTargetProvider(final CodecProvider codecProvider, final RedisClientProvider clientProvider) {
+    public BrokerRedisNoTargetProvider(
+        final CodecProvider codecProvider,
+        final RedisClientProvider clientProvider
+    ) {
         super(codecProvider, clientProvider);
     }
 
