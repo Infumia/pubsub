@@ -1,3 +1,5 @@
+import net.infumia.gradle.spotless
+
 plugins {
     java
 }
@@ -5,3 +7,5 @@ plugins {
 subprojects {
     apply<JavaPlugin>()
 }
+
+spotless()

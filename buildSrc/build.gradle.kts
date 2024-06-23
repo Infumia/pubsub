@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.nexus.plugin)
     implementation(libs.kotlin.plugin)
     implementation(libs.dokka.plugin)
+    implementation(libs.spotless.plugin)
 }
 
 kotlin {
