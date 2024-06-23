@@ -73,8 +73,12 @@ public interface Broker extends AutoCloseable {
      * @param <R>          the type of the response.
      * @return a {@link CompletableFuture} representing the response. Cannot be {@code null}
      */
-    <R> CompletableFuture<R> request(Object message, Class<R> responseType, Duration timeout,
-                                     Collection<Target> targets);
+    <R> CompletableFuture<R> request(
+        Object message,
+        Class<R> responseType,
+        Duration timeout,
+        Collection<Target> targets
+    );
 
     /**
      * Sends a request and awaits a response within a timeout.
@@ -86,7 +90,12 @@ public interface Broker extends AutoCloseable {
      * @param <R>          the type of the response.
      * @return a {@link CompletableFuture} representing the response. Cannot be {@code null}
      */
-    <R> CompletableFuture<R> request(Object message, Class<R> responseType, Duration timeout, Target... targets);
+    <R> CompletableFuture<R> request(
+        Object message,
+        Class<R> responseType,
+        Duration timeout,
+        Target... targets
+    );
 
     /**
      * Sends a request to targets and awaits a response using the default timeout.
@@ -97,7 +106,11 @@ public interface Broker extends AutoCloseable {
      * @param <R>          the type of the response.
      * @return a {@link CompletableFuture} representing the response. Cannot be {@code null}
      */
-    <R> CompletableFuture<R> request(Object message, Class<R> responseType, Collection<Target> targets);
+    <R> CompletableFuture<R> request(
+        Object message,
+        Class<R> responseType,
+        Collection<Target> targets
+    );
 
     /**
      * Sends a request and awaits a response using the default timeout.

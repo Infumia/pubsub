@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 final class Envelope {
+
     UUID brokerId;
     UUID messageId;
     /**
@@ -36,14 +37,21 @@ final class Envelope {
             return false;
         }
         final Envelope envelope = (Envelope) o;
-        return Objects.equals(this.brokerId, envelope.brokerId) &&
-               Objects.equals(this.messageId, envelope.messageId) &&
-               Objects.equals(this.respondsTo, envelope.respondsTo) &&
-               Objects.deepEquals(this.messagePayload, envelope.messagePayload);
+        return (
+            Objects.equals(this.brokerId, envelope.brokerId) &&
+            Objects.equals(this.messageId, envelope.messageId) &&
+            Objects.equals(this.respondsTo, envelope.respondsTo) &&
+            Objects.deepEquals(this.messagePayload, envelope.messagePayload)
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.brokerId, this.messageId, this.respondsTo, Arrays.hashCode(this.messagePayload));
+        return Objects.hash(
+            this.brokerId,
+            this.messageId,
+            this.respondsTo,
+            Arrays.hashCode(this.messagePayload)
+        );
     }
 }

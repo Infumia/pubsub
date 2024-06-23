@@ -1,6 +1,7 @@
 package net.infumia.pubsub;
 
 final class TargetImpl implements Target {
+
     static final Target GLOBAL = Target.of("", "");
 
     private final String type;

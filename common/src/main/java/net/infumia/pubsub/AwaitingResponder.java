@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
 final class AwaitingResponder<T> {
+
     private final CompletableFuture<T> future = new CompletableFuture<>();
     final Class<T> responseType;
 

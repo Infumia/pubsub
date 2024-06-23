@@ -1,8 +1,6 @@
 import net.infumia.gradle.publish
 
-plugins {
-    alias(libs.plugins.kotlin.serialization)
-}
+plugins { alias(libs.plugins.kotlin.serialization) }
 
 publish("kotlin-protobuf")
 

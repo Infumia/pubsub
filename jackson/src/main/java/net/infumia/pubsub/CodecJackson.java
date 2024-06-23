@@ -2,10 +2,10 @@ package net.infumia.pubsub;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 
 final class CodecJackson<T> implements Codec<T> {
+
     private final ObjectMapper mapper;
     private final Class<T> type;
 

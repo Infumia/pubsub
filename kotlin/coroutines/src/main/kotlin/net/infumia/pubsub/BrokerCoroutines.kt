@@ -4,12 +4,11 @@ import kotlin.reflect.KClass
 import kotlin.time.Duration
 
 /**
- * Interface representing a coroutine-based message broker that supports sending, receiving, and responding to messages.
+ * Interface representing a coroutine-based message broker that supports sending, receiving, and
+ * responding to messages.
  */
 interface BrokerCoroutines : AutoCloseable {
-    /**
-     * Initializes the message broker, performing any necessary setup or initialization tasks.
-     */
+    /** Initializes the message broker, performing any necessary setup or initialization tasks. */
     suspend fun initialize()
 
     /**
@@ -122,11 +121,7 @@ interface BrokerCoroutines : AutoCloseable {
      * @param timeout the duration to wait for a response.
      * @return the response to the request.
      */
-    suspend fun <R : Any> request(
-        message: Any,
-        responseType: KClass<R>,
-        timeout: Duration
-    ): R
+    suspend fun <R : Any> request(message: Any, responseType: KClass<R>, timeout: Duration): R
 
     /**
      * Sends a request and awaits a response using the default timeout.
@@ -137,7 +132,11 @@ interface BrokerCoroutines : AutoCloseable {
      * @param targets the collection of targets to send the request to.
      * @return the response to the request.
      */
-    suspend fun <R : Any> request(message: Any, responseType: KClass<R>, targets: Collection<Target>): R
+    suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        targets: Collection<Target>
+    ): R
 
     /**
      * Sends a request and awaits a response using the default timeout.
@@ -159,7 +158,11 @@ interface BrokerCoroutines : AutoCloseable {
      * @param targets the targets to send the request to.
      * @return the response to the request.
      */
-    suspend fun <R : Any> request(message: Any, responseType: KClass<R>, vararg targets: Pair<String, String>): R
+    suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        vararg targets: Pair<String, String>
+    ): R
 
     /**
      * Sends a request and awaits a response using the default timeout.
@@ -190,11 +193,12 @@ interface BrokerCoroutines : AutoCloseable {
      * @param responder the suspend function to handle incoming messages and produce responses.
      * @return an [AutoCloseable] that can be used to unregister the responder.
      */
-    suspend fun <T : Any, Y : Any> respond(type: KClass<T>, responder: suspend (T) -> Y?): AutoCloseable
+    suspend fun <T : Any, Y : Any> respond(
+        type: KClass<T>,
+        responder: suspend (T) -> Y?
+    ): AutoCloseable
 
-    /**
-     * Closes the message broker and releases any resources it holds.
-     */
+    /** Closes the message broker and releases any resources it holds. */
     override fun close()
 }
 
@@ -247,10 +251,8 @@ suspend inline fun <reified R : Any> BrokerCoroutines.request(
  * @param timeout the duration to wait for a response.
  * @return the response to the request.
  */
-suspend inline fun <reified R : Any> BrokerCoroutines.request(
-    message: Any,
-    timeout: Duration
-): R = request(message, R::class, timeout)
+suspend inline fun <reified R : Any> BrokerCoroutines.request(message: Any, timeout: Duration): R =
+    request(message, R::class, timeout)
 
 /**
  * Sends a request and awaits a response using the default timeout.
@@ -285,9 +287,8 @@ suspend inline fun <reified R : Any> BrokerCoroutines.request(
  * @param message the request message.
  * @return the response to the request.
  */
-suspend inline fun <reified R : Any> BrokerCoroutines.request(
-    message: Any
-): R = request(message, R::class)
+suspend inline fun <reified R : Any> BrokerCoroutines.request(message: Any): R =
+    request(message, R::class)
 
 /**
  * Registers a function to respond to incoming messages of a specific type.

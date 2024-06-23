@@ -9,7 +9,6 @@ import java.util.function.Function;
  * @param <Y> the type of the response.
  */
 public interface Responder<T, Y> extends Function<T, Y> {
-
     /**
      * Retrieves the class type of the message being handled.
      *
