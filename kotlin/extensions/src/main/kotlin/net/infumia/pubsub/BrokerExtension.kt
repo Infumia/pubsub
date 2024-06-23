@@ -30,8 +30,10 @@ inline fun <reified T : Any> Broker.listen(noinline handler: (T) -> Unit): AutoC
  * @param R the type of the expected response.
  * @return a [CompletableFuture] representing the response to the message.
  */
-inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target): CompletableFuture<R> =
-    this.request(message, R::class.java, *targets)
+inline fun <reified R : Any> Broker.request(
+    message: Any,
+    vararg targets: Target
+): CompletableFuture<R> = this.request(message, R::class.java, *targets)
 
 /**
  * Sends a message and expects a specific response.
@@ -41,7 +43,10 @@ inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Target
  * @param R the type of the expected response.
  * @return a [CompletableFuture] representing the response to the message.
  */
-inline fun <reified R : Any> Broker.request(message: Any, vararg targets: Pair<String, String>): CompletableFuture<R> =
+inline fun <reified R : Any> Broker.request(
+    message: Any,
+    vararg targets: Pair<String, String>
+): CompletableFuture<R> =
     this.request(message, R::class.java, targets.map { Target.of(it.first, it.second) })
 
 /**
@@ -57,7 +62,8 @@ inline fun <reified R : Any> Broker.request(message: Any): CompletableFuture<R> 
 /**
  * Registers a function to respond to messages of a specific type.
  *
- * @param handler the function to handle incoming messages of type [T] and produce a response of type [R].
+ * @param handler the function to handle incoming messages of type [T] and produce a response of
+ *   type [R].
  * @param T the type of the message to respond to.
  * @param R the type of the response.
  * @return an [AutoCloseable] that can be used to unregister the responder.

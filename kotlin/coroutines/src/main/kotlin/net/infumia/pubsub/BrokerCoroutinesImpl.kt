@@ -34,22 +34,28 @@ internal class BrokerCoroutinesImpl(
     override suspend fun <T : Any> listen(handler: HandlerCoroutines<T>): AutoCloseable =
         this.delegate.listen(handler.type.java) { scope.launch { handler(it) } }
 
-    override suspend fun <T : Any> listen(type: KClass<T>, handler: suspend (T) -> Unit): AutoCloseable =
-        this.delegate.listen(type.java) { scope.launch { handler(it) } }
+    override suspend fun <T : Any> listen(
+        type: KClass<T>,
+        handler: suspend (T) -> Unit
+    ): AutoCloseable = this.delegate.listen(type.java) { scope.launch { handler(it) } }
 
     override suspend fun <R : Any> request(
         message: Any,
         responseType: KClass<R>,
         timeout: Duration,
         targets: Collection<Target>
-    ): R = this.delegate.request(message, responseType.java, timeout.toJavaDuration(), targets).await()
+    ): R =
+        this.delegate.request(message, responseType.java, timeout.toJavaDuration(), targets).await()
 
     override suspend fun <R : Any> request(
         message: Any,
         responseType: KClass<R>,
         timeout: Duration,
         vararg targets: Target
-    ): R = this.delegate.request(message, responseType.java, timeout.toJavaDuration(), *targets).await()
+    ): R =
+        this.delegate
+            .request(message, responseType.java, timeout.toJavaDuration(), *targets)
+            .await()
 
     override suspend fun <R : Any> request(
         message: Any,
@@ -57,50 +63,62 @@ internal class BrokerCoroutinesImpl(
         timeout: Duration,
         vararg targets: Pair<String, String>
     ): R =
-        this.delegate.request(
-            message,
-            responseType.java,
-            timeout.toJavaDuration(),
-            targets.map { Target.of(it.first, it.second) }
-        ).await()
+        this.delegate
+            .request(
+                message,
+                responseType.java,
+                timeout.toJavaDuration(),
+                targets.map { Target.of(it.first, it.second) }
+            )
+            .await()
 
-    override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, timeout: Duration): R =
-        this.delegate.request(
-            message,
-            responseType.java,
-            timeout.toJavaDuration()
-        ).await()
+    override suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        timeout: Duration
+    ): R = this.delegate.request(message, responseType.java, timeout.toJavaDuration()).await()
 
-    override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, targets: Collection<Target>): R =
+    override suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        targets: Collection<Target>
+    ): R =
         this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, targets).await()
 
-    override suspend fun <R : Any> request(message: Any, responseType: KClass<R>, vararg targets: Target): R =
-        this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT, *targets).await()
+    override suspend fun <R : Any> request(
+        message: Any,
+        responseType: KClass<R>,
+        vararg targets: Target
+    ): R =
+        this.delegate
+            .request(message, responseType.java, Internal.REQUEST_TIMEOUT, *targets)
+            .await()
 
     override suspend fun <R : Any> request(
         message: Any,
         responseType: KClass<R>,
         vararg targets: Pair<String, String>
     ): R =
-        this.delegate.request(
-            message,
-            responseType.java,
-            Internal.REQUEST_TIMEOUT,
-            targets.map { Target.of(it.first, it.second) }
-        ).await()
+        this.delegate
+            .request(
+                message,
+                responseType.java,
+                Internal.REQUEST_TIMEOUT,
+                targets.map { Target.of(it.first, it.second) }
+            )
+            .await()
 
     override suspend fun <R : Any> request(message: Any, responseType: KClass<R>): R =
-        this.delegate.request(
-            message,
-            responseType.java,
-            Internal.REQUEST_TIMEOUT
-        ).await()
+        this.delegate.request(message, responseType.java, Internal.REQUEST_TIMEOUT).await()
 
-    override suspend fun <T : Any, Y: Any> respond(responder: ResponderCoroutines<T, Y>): AutoCloseable =
-        this.delegate.respond(responder.type.java) { scope.launch { responder(it) } }
+    override suspend fun <T : Any, Y : Any> respond(
+        responder: ResponderCoroutines<T, Y>
+    ): AutoCloseable = this.delegate.respond(responder.type.java) { scope.launch { responder(it) } }
 
-    override suspend fun <T : Any, Y : Any> respond(type: KClass<T>, responder: suspend (T) -> Y?): AutoCloseable =
-        this.delegate.respond(type.java) { scope.launch { responder(it) } }
+    override suspend fun <T : Any, Y : Any> respond(
+        type: KClass<T>,
+        responder: suspend (T) -> Y?
+    ): AutoCloseable = this.delegate.respond(type.java) { scope.launch { responder(it) } }
 
     override fun close() {
         this.delegate.close()
