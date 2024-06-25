@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.0"
-kotlinserialization = "1.7.0"
+kotlinserialization = "1.7.1"
 
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "2.9.3" }
