@@ -7,13 +7,16 @@ include(
     "common",
     "redis",
     "jackson",
-    "kotlin-extensions",
-    "kotlin-coroutines",
-    "kotlin-protobuf"
 )
 
-project(":kotlin-extensions").projectDir = file("kotlin/extensions")
+registerInnerModule("kotlin", "extensions")
 
-project(":kotlin-coroutines").projectDir = file("kotlin/coroutines")
+registerInnerModule("kotlin", "coroutines")
 
-project(":kotlin-protobuf").projectDir = file("kotlin/protobuf")
+registerInnerModule("kotlin", "protobuf")
+
+private fun registerInnerModule(vararg paths: String) {
+    val moduleName = paths.joinToString("-")
+    include(moduleName)
+    project(":$moduleName").projectDir = file(paths.joinToString("/"))
+}
