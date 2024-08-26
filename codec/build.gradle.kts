@@ -1,3 +1,3 @@
-import net.infumia.gradle.publish
+import net.infumia.gradle.applyPublish
 
-publish("codec")
+applyPublish("codec")

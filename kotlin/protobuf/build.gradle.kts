@@ -1,8 +1,8 @@
-import net.infumia.gradle.publish
+import net.infumia.gradle.applyPublish
 
 plugins { alias(libs.plugins.kotlin.serialization) }
 
-publish("kotlin-protobuf")
+applyPublish("kotlin-protobuf")
 
 dependencies {
     compileOnly(project(":codec"))
