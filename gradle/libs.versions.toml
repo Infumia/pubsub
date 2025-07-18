@@ -5,7 +5,7 @@ kotlinserialization = "1.9.0"
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "2.9.3" }
 redis = { module = "io.lettuce:lettuce-core", version = "6.7.1.RELEASE" }
-jackson = { module = "com.fasterxml.jackson.core:jackson-databind", version = "2.19.1" }
+jackson = { module = "com.fasterxml.jackson.core:jackson-databind", version = "2.19.2" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinserialization" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinserialization" }
